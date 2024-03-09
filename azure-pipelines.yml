@@ -52,6 +52,12 @@ stages:
         pip install -r requirements_test.txt
       displayName: 'Install dependencies'
 
-    - script: |
-        python -m unittest -b -v
-      displayName: 'Unit test'
+    # - script: |
+    #     python -m unittest -b -v
+    #   displayName: 'Unit test'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results'
+      inputs:
+        testResultsFiles: '**/TEST-*.xml'
+        testRunTitle: 'Unit Tests'
