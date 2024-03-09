@@ -52,12 +52,14 @@ stages:
         pip install -r requirements_test.txt
       displayName: 'Install dependencies'
 
-    # - script: |
-    #     python -m unittest -b -v
-    #   displayName: 'Unit test'
+    - script: |
+        python -m unittest discover -v
+        # Convert unittest output to JUnit XML format
+        python -m xmlrunner discover -o test-reports
+      displayName: 'Run and Convert Unit Tests'
 
     - task: PublishTestResults@2
       displayName: 'Publish Test Results'
       inputs:
-        testResultsFiles: '**/TEST-*.xml'
+        testResultsFiles: '**/test-reports/*.xml'
         testRunTitle: 'Unit Tests'
